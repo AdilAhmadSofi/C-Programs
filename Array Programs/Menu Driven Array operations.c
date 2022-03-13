@@ -13,17 +13,19 @@ void smallarrayelement(int []);
 void largearrayelement(int []);
 void insertarrayelement(int []);
 void primearrayelement(int []);
+void deletearrayelement(int []);
+void insertNtharrayelement(int []);
 int main()
 {
 	int arr[20],s,s1;
 	printf("Enter Number of Elements in an Array(Less than 20)\n");
 	scanf("%d",&n);
-	printf("Enter Array Elements\n");
+	printf("Enter %d Array Elements\n",n);
 	for(int i=0;i<n;i++)
 		scanf("%d",&arr[i]);
 	//Menu
 	label1:
-	printf("\n\n0 : Display Array Elements\n1 : Sum of Array Elements\n2 : Smallest Element In an Array\n3 : Largest Element In an Array\n4 : Frequency Array Elements\n5 : Prime Numbers in an Array\n6 : Search an Array Elements(Linear)\n7 : Search an Array Elements(Binary)\n8 : Bubble Sort Array Elements\n9 : Reversing of Array Elements\n10 : Insert an Array Elements at the End\n");
+	printf("\n\n0 : Display Array Elements\n1 : Sum of Array Elements\n2 : Smallest Element In an Array\n3 : Largest Element In an Array\n4 : Frequency of Array Elements\n5 : Prime Numbers in an Array\n6 : Search an Array Elements(Linear)\n7 : Search an Array Elements(Binary)\n8 : Bubble Sort Array Elements\n9 : Reversing of Array Elements\n10 : Insert an Array Elements at the End\n11 : Delete an Array Element\n12 : Insert an Array Elements at Given Location\n");
 	scanf("%d",&s);
 	switch(s)
 	{	
@@ -60,6 +62,12 @@ int main()
 		case 10:
 			insertarrayelement(arr);
 			break;
+		case 11:
+			deletearrayelement(arr);
+			break;
+		case 12:				
+			insertNtharrayelement(arr);
+			break;	
 		default:
 			printf("**Invalid Selection**\n");
 	}
@@ -125,7 +133,7 @@ void smallarrayelement(int arr[])
 	for(int i=1;i<n;i++)
 	{
 		if(arr[i]<small)
-		small=arr[i];
+			small=arr[i];
 	}
 	printf("%d is Smallest Element in an Array\n",small);
 }
@@ -250,18 +258,64 @@ void insertarrayelement(int arr[])
 void primearrayelement(int arr[])
 {
 	printf("Prime Numbers in an Array are:\n");
+	int flag=0;
 	for(int i=0;i<n;i++)
-	{	 int j;
+	{	 
+		int j;
 		for(j=2;arr[i]%j!=0;j++);
 		if(arr[i]==j)
-		printf("%d is Prime\n",arr[i]);
+		{
+			flag=1;
+			printf("%d is Prime\n",arr[i]);
+		}
 	}
+	if(flag==0)
+		printf("N0 Prime numbers f0und");
 }
-	
-
-
-
-
-
-
-
+	//Delete Array Element
+void deletearrayelement(int arr[])
+{
+	int elt,flag=0,i;
+	printf("Enter an Element to Delete\n");   		
+	scanf("%d",&elt);
+	for(i=0;i<n;i++)
+	{
+		if(elt==arr[i])
+		{
+			flag++;
+			for(int j=i;j<n;j++)
+			{	
+				arr[j]=arr[j+1];
+			}
+			n-=1;
+			break;			
+		}
+	}
+	if(flag>0)
+		printf("Element %d Deleted",elt);
+	else
+		printf("Element %d Not Present in an Array",elt);	
+}
+	//Insert Array Element at Given Location
+void insertNtharrayelement(int arr[])
+{
+	int elt,pos,i;
+	printf("Enter an Element to Insert\n");   		
+	scanf("%d",&elt);
+	printf("Enter Position\n");   		
+	scanf("%d",&pos);
+	if(pos<=n+1)
+	{
+		for(i=n;i>=pos;i--)
+		{
+			arr[i]=arr[i-1];
+		}
+		arr[i]=elt;
+		n+=1;
+		printf("Updated Elements in an Array are:\n");   
+		for(int i=0;i<n;i++)
+			printf("%d\t",arr[i]);
+	}
+	else
+		printf("Position %d Out of Bound",pos);
+}	
